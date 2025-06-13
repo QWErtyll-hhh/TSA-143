@@ -4,22 +4,132 @@
 
 using namespace std;
 
+// Константы для выбора режима заполнения
 enum {RANDOM = 5, MANUAL = 6};
 
+/**
+ * @brief Считывает целое число с клавиатуры
+ * @return Введенное число
+ * @throws abort() при некорректном вводе
+ */
 int getValue();
+
+/**
+ * @brief Получает и проверяет размер массива
+ * @return Размер массива (size_t)
+ * @throws abort() если размер <= 0
+ */
 size_t getSize();
+
+/**
+ * @brief Проверяет корректность размера массива
+ * @param n Проверяемый размер
+ * @throws abort() если n <= 0
+ */
 void checkN(const int n);
+
+/**
+ * @brief Создает новый двумерный массив
+ * @param m Количество строк
+ * @param n Количество столбцов
+ * @return Указатель на созданный массив
+ */
 int** getNewArray(const size_t m, const size_t n);
+
+/**
+ * @brief Выводит массив на экран
+ * @param array Указатель на массив
+ * @param m Количество строк
+ * @param n Количество столбцов
+ */
 void printArray(int** array, const size_t m, const size_t n);
+
+/**
+ * @brief Заполняет массив вручную
+ * @param array Указатель на массив
+ * @param m Количество строк
+ * @param n Количество столбцов
+ */
 void fillArray(int** array, const size_t m, const size_t n);
+
+/**
+ * @brief Заменяет максимальный элемент в каждой строке
+ * @param array Указатель на массив
+ * @param m Количество строк
+ * @param n Количество столбцов
+ */
 void changeMaxElementInLine(int** array, const size_t m, const size_t n);
+
+/**
+ * @brief Находит индекс максимального элемента в строке
+ * @param array Указатель на строку массива
+ * @param n Количество элементов в строке
+ * @return Индекс максимального элемента
+ */
 size_t getMaxIndexInLine(int* array, const size_t n);
+
+/**
+ * @brief Освобождает память, занятую массивом
+ * @param array Указатель на массив
+ * @param m Количество строк
+ * @param n Количество столбцов
+ */
 void deleteArray(int** array, const size_t m, const size_t n);
+
+/**
+ * @brief Создает копию массива
+ * @param array Указатель на исходный массив
+ * @param m Количество строк
+ * @param n Количество столбцов
+ * @return Указатель на новый массив-копию
+ */
 int** copyArray(int** array, const size_t m, const size_t n);
+
+/**
+ * @brief Подсчитывает количество минимальных отрицательных элементов
+ * @param array Указатель на массив
+ * @param m Количество строк
+ * @param n Количество столбцов
+ * @return Количество минимальных отрицательных элементов
+ */
 int getCountOfMinNegative(int** array, const size_t m, const size_t n);
+
+/**
+ * @brief Добавляет новые столбцы в массив
+ * @param array Указатель на исходный массив
+ * @param m Количество строк
+ * @param n Количество столбцов
+ * @param newarray Указатель на результирующий массив
+ */
 void addNewColumns(int** array, const size_t m, const size_t n, int** newarray);
+
+/**
+ * @brief Находит минимальный отрицательный элемент в массиве
+ * @param array Указатель на массив
+ * @param m Количество строк
+ * @param n Количество столбцов
+ * @return Значение минимального отрицательного элемента
+ */
 int findMinNegative(int** array, const size_t m, const size_t n);
+
+/**
+ * @brief Находит первый отрицательный элемент в массиве
+ * @param array Указатель на массив
+ * @param m Количество строк
+ * @param n Количество столбцов
+ * @return Значение первого отрицательного элемента
+ * @throws abort() если отрицательных элементов нет
+ */
 int findFirstNegative(int** array, const size_t m, const size_t n);
+
+/**
+ * @brief Заполняет массив случайными числами
+ * @param array Указатель на массив
+ * @param m Количество строк
+ * @param n Количество столбцов
+ * @param start Нижняя граница диапазона
+ * @param end Верхняя граница диапазона
+ */
 void fillRandom(int** array, const size_t m, const size_t n, const int start, const int end);
 
 int main()
@@ -71,6 +181,20 @@ int main()
     deleteArray(array, m, n);
     
     return 0;
+}
+
+// Реализация функций
+
+void fillRandom(int** array, const size_t m, const size_t n, const int start, const int end)
+{
+    srand(time(0));
+    for (size_t i = 0; i < m; i++)
+    {
+        for (size_t j = 0; j < n; j++)
+        {
+            array[i][j] = rand() % (end - start + 1) + start;
+        }
+    }
 }
 
 int getValue()
