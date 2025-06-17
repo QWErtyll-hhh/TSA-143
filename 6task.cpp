@@ -5,6 +5,9 @@
 
 using namespace std;
 
+// Режимы заполнения массива
+enum FillMode { RANDOM_FILL = 1, MANUAL_FILL = 2 };
+
 /**
  * @brief Безопасное чтение целого числа с клавиатуры
  * @return Введенное целое число
@@ -72,18 +75,10 @@ int findMaxNegative(const int* arr, const size_t n);
  */
 void replaceSecondWithMaxNegative(int* arr, const size_t n);
 
-// Константы для выбора режима заполнения
-const int RANDOM = 1; ///< Режим случайного заполнения
-const int MANUAL = 2; ///< Режим ручного заполнения
-
-/**
- * @brief Точка входа в программу
- * @return 0 при успешном выполнении
- */
 int main()
 {
     // Инициализация генератора случайных чисел
-    srand(time(0));
+    srand(static_cast<unsigned>(time(nullptr)));
 
     // Получение размера массива
     size_t n = getSize();
@@ -119,9 +114,9 @@ int main()
 
 int getValue()
 {
-    int value;
+    int value = 0;
     cin >> value;
-    if (cin.fail())
+    if (cin.fail()) 
     {
         cerr << "Input error!" << endl;
         abort();
@@ -139,7 +134,7 @@ size_t getSize()
 
 void checkN(const int n)
 {
-    if (n <= 0)
+    if (n <= 0) 
     {
         cerr << "Error: array size must be positive!" << endl;
         abort();
@@ -151,37 +146,36 @@ void fillArray(int* arr, const size_t n)
     cout << "Choose input method (1 - random, 2 - manual): ";
     int method = getValue();
     
-    if (method == RANDOM)
-    {
-        for (size_t i = 0; i < n; i++)
-        {
-            arr[i] = rand() % 21 - 10; // [-10, 10]
-        }
-    }
-    else if (method == MANUAL)
-    {
-        cout << "Enter " << n << " integers in range [-10, 10]:" << endl;
-        for (size_t i = 0; i < n; i++)
-        {
-            arr[i] = getValue();
-            if (arr[i] < -10 || arr[i] > 10)
+    switch (method) {
+        case RANDOM_FILL:
+            for (size_t i = 0; i < n; i++) 
             {
-                cerr << "Error: value out of range [-10, 10]!" << endl;
-                abort();
+                arr[i] = rand() % 21 - 10; 
             }
-        }
-    }
-    else
-    {
-        cerr << "Error: invalid input method!" << endl;
-        abort();
+            break;
+            
+        case MANUAL_FILL:
+            cout << "Enter " << n << " integers in range [-10, 10]:" << endl;
+            for (size_t i = 0; i < n; i++) 
+            {
+                arr[i] = getValue();
+                if (arr[i] < -10 || arr[i] > 10) 
+                {
+                    cerr << "Error: value out of range [-10, 10]!" << endl;
+                    abort();
+                }
+            }
+            break;
+            
+        default:
+            cerr << "Error: invalid input method!" << endl;
+            abort();
     }
 }
 
 void printArray(const int* arr, const size_t n)
 {
-    for (size_t i = 0; i < n; i++)
-    {
+    for (size_t i = 0; i < n; i++) {
         cout << arr[i] << " ";
     }
     cout << endl;
@@ -190,10 +184,8 @@ void printArray(const int* arr, const size_t n)
 int sumOddValues(const int* arr, const size_t n)
 {
     int sum = 0;
-    for (size_t i = 0; i < n; i++)
-    {
-        if (arr[i] % 2 != 0)
-        {
+    for (size_t i = 0; i < n; i++) {
+        if (arr[i] % 2 != 0) {
             sum += arr[i];
         }
     }
@@ -204,9 +196,9 @@ void printIndicesGreaterThanA(const int* arr, const size_t n, const int A)
 {
     cout << "Indices of elements > " << A << ": ";
     bool found = false;
-    for (size_t i = 0; i < n; i++)
+    for (size_t i = 0; i < n; i++) 
     {
-        if (arr[i] > A)
+        if (arr[i] > A) 
         {
             cout << i << " ";
             found = true;
@@ -219,9 +211,9 @@ void printIndicesGreaterThanA(const int* arr, const size_t n, const int A)
 int findMaxNegative(const int* arr, const size_t n)
 {
     int maxNeg = 0;
-    for (size_t i = 0; i < n; i++)
+    for (size_t i = 0; i < n; i++) 
     {
-        if (arr[i] < 0 && (maxNeg == 0 || arr[i] > maxNeg))
+        if (arr[i] < 0 && (maxNeg == 0 || arr[i] > maxNeg)) 
         {
             maxNeg = arr[i];
         }
@@ -231,19 +223,17 @@ int findMaxNegative(const int* arr, const size_t n)
 
 void replaceSecondWithMaxNegative(int* arr, const size_t n)
 {
-    if (n < 2)
+    if (n < 2) 
     {
         cerr << "Error: array too small for this operation!" << endl;
         return;
     }
 
     int maxNeg = findMaxNegative(arr, n);
-    if (maxNeg == 0)
+    if (maxNeg == 0) 
     {
         cout << "No negative elements found, second element unchanged." << endl;
-    }
-    else
-    {
+    } else {
         arr[1] = maxNeg;
     }
 }
