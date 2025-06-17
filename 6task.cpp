@@ -5,7 +5,6 @@
 
 using namespace std;
 
-// Режимы заполнения массива
 enum FillMode { RANDOM_FILL = 1, MANUAL_FILL = 2 };
 
 /**
@@ -77,14 +76,11 @@ void replaceSecondWithMaxNegative(int* arr, const size_t n);
 
 int main()
 {
-    // Инициализация генератора случайных чисел
     srand(static_cast<unsigned>(time(nullptr)));
 
-    // Получение размера массива
     size_t n = getSize();
     int* arr = new int[n];
 
-    // Заполнение массива
     fillArray(arr, n);
 
     cout << "Original array: ";
