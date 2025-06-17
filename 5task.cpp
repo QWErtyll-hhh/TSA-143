@@ -114,14 +114,14 @@ void checkN(const int n)
 
 double sumN(const int n) 
 { 
-    if (n == 0) return 1.0 / 12.0; // Первый член ряда (k=0): 1/(2!3!) = 1/12
+    if (n == 0) return 1.0 / 12.0; 
 
-    double sum = 1.0 / 12.0; // Начальное значение (k=0)
+    double sum = 1.0 / 12.0; 
     double current = sum; 
 
     for (int k = 1; k <= n; k++) 
     { 
-        current = getNext(current, k - 1); // k-1, так как первый член уже учтен
+        current = getNext(current, k - 1); 
         sum += current;
     }
     return sum;
@@ -129,19 +129,20 @@ double sumN(const int n)
 
 double getNext(const double current, const int k) 
 {
-    return -current * (k + 1) / ((k + 4) * (k + 5));
+    return -current / ((k + 3) * (k + 4));
 }
 
 double sumE(const double e) 
 {
     double sum = 0.0;
-    double current = 1.0 / 12.0; // Первый член ряда (k=0)
+    double current = 1.0 / 12.0; 
     int k = 0;
 
     while (abs(current) >= e)
     {
         sum += current;
         k++;
-        current = getNext(current, k - 1);     }
+        current = getNext(current, k - 1);     
+    }
     return sum;
 }
